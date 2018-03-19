@@ -1,4 +1,5 @@
 <?php
+    session_start();
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
@@ -11,6 +12,7 @@
         Lesson::checkLesson($id);
         $lesson = Lesson::get($id);
         $lesson->delete();
+        $_SESSION["success"] = "Class correctly deleted.";
     }
     
 	header("Location:" . Helper::baseurl() . "app/classes/index.php");

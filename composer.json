@@ -1,0 +1,7 @@
+{
+    "name": "carlos2396/gym",
+    "description": "Second parcial advanced datbases project. Gym scenario.",
+    "require": {
+        "nesbot/carbon": "^1.24"
+    }
+}

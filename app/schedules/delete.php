@@ -1,4 +1,5 @@
 <?php
+    session_start();
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
@@ -11,6 +12,7 @@
         Schedule::checkSchedule($id);
         $schedule = Schedule::get($id);
         $schedule->delete();
+        $_SESSION["success"] = "Scheduled correctly deleted.";
     }
     
 	header("Location:" . Helper::baseurl() . "app/classes/show.php?lesson=".$schedule->lesson()->id);

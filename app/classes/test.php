@@ -5,5 +5,8 @@
     $lessons = Lesson::all();
     $lesson = Lesson::get(1);
 
-    echo json_encode($lesson->schedules());
+    session_start();
+    $_SESSION["value"] = 5;
+    echo $_SESSION["value"];
+    die();
 ?>

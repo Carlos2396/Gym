@@ -23,27 +23,27 @@ INSERT INTO Classes (name, capacity, trainer_id) VALUES('Pilates', 10, 5);
 INSERT INTO Classes (name, capacity, trainer_id) VALUES('Cross fit', 10, 6);
 INSERT INTO Classes (name, capacity, trainer_id) VALUES('Insanity', 10, 6);
 
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 1);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 1);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 2);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 3);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 3);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 4);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 4);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 5);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 6);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 6);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 1);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 1);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 2);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 3);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 3);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 4);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 4);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 5);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 6);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 6);
 
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 7);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 8);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 8);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 8);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 9);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 10);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 10);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 11);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '1 hour', 11);
-INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '1 hour' + INTERVAL '1 DAY', 12);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 7);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 8);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 8);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 8);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 9);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 10);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 10);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 11);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR', CURRENT_TIMESTAMP + INTERVAL '3 hour', 11);
+INSERT INTO schedules (start_time, end_time, class_id) VALUES(CURRENT_TIMESTAMP + INTERVAL '2 HOUR' + INTERVAL '1 DAY', CURRENT_TIMESTAMP + INTERVAL '3 hour' + INTERVAL '1 DAY', 12);
 
 INSERT INTO members (name, last_name, membership, birthdate, last_payment, created_at, recommended_by, branch_id)
 VALUES('Carlos', 'Amador', 'premium', '1996-10-23', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP - INTERVAL '2 WEEK', NULL, 1);
