@@ -22,14 +22,10 @@
                     </thead>
                     <tbody>
                         <?php foreach($schedules as $i=>$schedule) { ?>
-                            <?php 
-                                $start = new Carbon($schedule->start_time, 'America/Mexico_City');
-                                $end = new Carbon($schedule->end_time, 'America/Mexico_City');
-                            ?>
                             <tr>
                                 <td><?php echo $i+1 ?></td>
-                                <td><?php echo $start->format('l h:i:s A') ?></td>
-                                <td><?php echo $end->format('l h:i:s A') ?></td>
+                                <td><?php echo $schedule->start_time->format('l h:i:s A') ?></td>
+                                <td><?php echo $schedule->end_time->format('l h:i:s A') ?></td>
                                 <td>10</td>
                                 <td>
                                     <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/schedules/delete.php?schedule=<?php echo $schedule->id ?>">Delete</a>

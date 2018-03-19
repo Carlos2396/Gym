@@ -18,7 +18,8 @@
         
         /*              Static init and constructor               */
     	public function __construct(){
-            $this->con = new Database; 		
+            $this->con = new Database;
+            $this->con->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
     	}
 
         /*              Setters               */
@@ -89,44 +90,80 @@
 
         /*              Class methods               */
     	public function save() {
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+            
     		try{
-    			$query = $this->con->prepare('INSERT INTO classes (name, capacity, trainer_id) values (?,?,?)');
+    			$query = $this->con->prepare('INSERT INTO classes (name, capacity, trainer_id) values (?,?,51)');
                 $query->bindParam(1, $this->name, PDO::PARAM_STR);
                 $query->bindParam(2, $this->capacity, PDO::PARAM_INT);
-                $query->bindParam(3, $this->trainer_id, PDO::PARAM_INT);
-    			$query->execute();
-    			$this->con->close();
+                //$query->bindParam(3, $this->trainer_id, PDO::PARAM_INT);
+                $data->result = $query->execute();
+                $this->con->close();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];
+                }
     		}
             catch(PDOException $e) {
-    	        echo  $e->getMessage();
-    	    }
+    	        $data->error = $e->getMessage();
+            }
+
+            return $data;
     	}
 
         public function update(){
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+            
     		try{
     			$query = $this->con->prepare('UPDATE classes SET name = ?, capacity = ?, trainer_id = ? WHERE id = ?');
     			$query->bindParam(1, $this->name, PDO::PARAM_STR);
                 $query->bindParam(2, $this->capacity, PDO::PARAM_INT);
                 $query->bindParam(3, $this->trainer_id, PDO::PARAM_INT);
                 $query->bindParam(4, $this->id, PDO::PARAM_INT);
-                $result = $query->execute();
-    			$this->con->close();
+                $data->result = $query->execute();
+                $this->con->close();
+                
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];   
+                }
     		}
             catch(PDOException $e){
-    	        echo  $e->getMessage();
-    	    }
+    	        $data->error = $e->getMessage();
+            }
+            
+            return $data;
     	}
 
         public function delete(){
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+
             try{
                 $query = $this->con->prepare('DELETE FROM classes WHERE id = ?');
                 $query->bindParam(1, $this->id, PDO::PARAM_INT);
-                $query->execute();
+                $data->result = $query->execute();
                 $this->con->close();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];   
+                }
             }
             catch(PDOException $e){
-                echo  $e->getMessage();
+    	        $data->error = $e->getMessage();
             }
+            
+            return $data;
         }
 
 

@@ -3,6 +3,8 @@
     require_once("../../interfaces/ISchedule.php");
     require_once("../../models/Helper.php");
     require_once("../../models/Lesson.php");
+    require '../../vendor/autoload.php';
+    use Carbon\Carbon;
 
     class Schedule implements ISchedule {
         /*              Attributes               */
@@ -20,8 +22,8 @@
         /*              Setters               */
         public function setAttributes($id, $start_time, $end_time, $lesson_id){
             $this->id = $id;
-            $this->start_time = $start_time;
-            $this->end_time = $end_time;
+            $this->start_time = new Carbon($start_time, 'America/Mexico_City');
+            $this->end_time = new Carbon($end_time, 'America/Mexico_City');
             $this->lesson_id = $lesson_id;
         }
 
@@ -39,7 +41,7 @@
                 if(!empty($results)){
                     foreach($results as $result){
                         $temp = new Schedule;
-                        $temp->setAttributes($result->id, $result->start_time, $result->end_time, $result->class_id);
+                        $temp->setAttributes($result->id, $result->start_time->toDateTimeString(), $result->end_time->toDateTimeString(), $result->class_id);
                         array_push($schedules, $temp);
                     }
                 }
@@ -85,34 +87,94 @@
                 header("Location:" . Helper::baseurl() . "app/classes/index.php");
             }
         }
+
+        public static function copyDate($date, $new){
+            $date->year = $new->year;
+            $date->month = $new->month;
+            $date->day = $new->day;
+            return $date;
+        }
         
         /*              Class methods               */
     	public function save() {
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+            
     		try{
+                //Inicia la transacción
+                $this->con->beginTransaction();
+                $this->con->exec('LOCK TABLE schedules IN EXCLUSIVE MODE');
+                $this->con->exec('LOCK TABLE trainers IN EXCLUSIVE MODE');
+                $trainer = $this->lesson()->trainer();
+
+                $overlap = false;
+                foreach($trainer->schedules() as $schedule){
+                    if($this->start_time->dayOfWeek == $schedule->start_time->dayOfWeek || $this->end_time->dayOfWeek == $schedule->end_time->dayOfWeek){
+                        $schedule->start_time = Schedule::copyDate($schedule->start_time, $this->start_time);
+                        $schedule->end_time = Schedule::copyDate($schedule->end_time, $this->end_time);
+
+                        if($schedule->start_time->between($this->start_time, $this->end_time) || $schedule->end_time->between($this->start_time, $this->end_time)){
+                            $overlap = true;
+                            break;
+                        }
+                    }
+                }
+
+                if($overlap){
+                    $data->error = "The schedule overlaps with another lesson given by the trainer.";
+                    return $data;
+                }
+
     			$query = $this->con->prepare('INSERT INTO schedules (start_time, end_time, class_id) values (?,?,?)');
-                $query->bindParam(1, $this->start_time, PDO::PARAM_STR);
-                $query->bindParam(2, $this->end_time, PDO::PARAM_INT);
+                $query->bindParam(1, $this->start_time->toDateTimeString(), PDO::PARAM_STR);
+                $query->bindParam(2, $this->end_time->toDateTimeString(), PDO::PARAM_STR);
                 $query->bindParam(3, $this->lesson_id, PDO::PARAM_INT);
-    			$query->execute();
-    			$this->con->close();
+                $data->result = $query->execute();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];
+                    $this->con->rollback();
+                }
+                else{
+                    $this->con->commit();
+                }
+                $this->con->close();
     		}
-            catch(PDOException $e) {
-    	        echo  $e->getMessage();
-    	    }
+            catch(PDOException $e){
+    	        $data->error = $e->getMessage();
+            }
+            
+            return $data;
         }
         
         public function delete(){
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+            
             try{
                 $query = $this->con->prepare('DELETE FROM schedules WHERE id = ?');
                 $query->bindParam(1, $this->id, PDO::PARAM_INT);
-                $query->execute();
+                $data->result = $query->execute();
                 $this->con->close();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];
+                }
             }
             catch(PDOException $e){
-                echo  $e->getMessage();
+    	        $data->error = $e->getMessage();
             }
+
+            return $data;
         }
 
+        /*              Relations               */
         public function lesson(){
             return Lesson::get($this->lesson_id);
         }

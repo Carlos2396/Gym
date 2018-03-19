@@ -3,6 +3,7 @@
     require_once("../../interfaces/ITrainer.php");
     require_once("../../models/Helper.php");
     require_once("../../models/Branch.php");
+    require_once("../../models/Schedule.php");
 
     class Trainer implements ITrainer {
         /*              Attributes               */
@@ -84,6 +85,38 @@
         /*              Class methods               */
         public function branch(){
             return Branch::get($this->branch_id);
+        }
+
+        public function schedules(){
+            try{
+                $con = new Database;
+                $query = $con->prepare('SELECT *
+                FROM schedules s
+                WHERE s.class_id IN(
+                    SELECT c.id
+                    FROM trainers t, classes c
+                    WHERE t.id = ? AND c.trainer_id = t.id
+                )');
+                $query->bindParam(1, $this->id, PDO::PARAM_INT);
+                $query->execute();
+                $con->close();
+
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+                $schedules = array();
+                if(!empty($results)){
+                    foreach($results as $result){
+                        $temp = new Schedule;
+                        $temp->setAttributes($result->id, $result->start_time, $result->end_time, $result->class_id);
+                        array_push($schedules, $temp);
+                    }
+                }
+
+                return $schedules;
+    		}
+            catch(PDOException $e){
+    	        echo  $e->getMessage();
+    	    }
         }
     }
 ?>

@@ -13,7 +13,6 @@
             ini_set('display_errors', 1);
             require_once "../../models/Helper.php";
             require_once "../../models/Lesson.php";
-            use Carbon;
             
             $id = filter_input(INPUT_GET, 'lesson', FILTER_VALIDATE_INT);
             if( !$id )
@@ -33,6 +32,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <?php include '../layouts/success.php' ?>
+                                <?php include '../layouts/error.php' ?>
+                                
                                 <div class="card">
                                     <div class="card-header" data-background-color="purple">
                                         <h4 class="title">Information of the class</h4>

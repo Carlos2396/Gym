@@ -31,6 +31,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <?php include '../layouts/success.php' ?>
+                                <?php include '../layouts/error.php' ?>
+
                                 <a class="btn btn-success" href="<?php echo Helper::baseurl() ?>app/classes/create.php">Create class</a>
                                 <div class="card">
                                     <div class="card-header" data-background-color="purple">

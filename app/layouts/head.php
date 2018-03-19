@@ -13,6 +13,6 @@
 <!--  CSS for Demo Purpose, don't include it in your project     -->
 <link href="../../assets/css/demo.css" rel="stylesheet" />
 
-<!--     Fonts and icons     -->
+<!--     Fonts and icons     
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'> -->
