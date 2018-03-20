@@ -35,7 +35,6 @@
                                     </div>
                                     <div class="card-content">
                                         <form action="<?php echo Helper::baseurl() ?>app/members/save.php" method="POST">
-                                            <input type="hidden" name="created_at" id="created_at">
                                             <div class="row">
                                                 <div class="col-md-8 col-md-offset-2">
                                                     <div class="form-group label-floating">
@@ -61,7 +60,7 @@
                                                         <select class="form-control" name="membership" id="membership" required>
                                                             <?php
                                                                 foreach($memberships as $membership){
-                                                                    echo '<option value="'.$membership->id.'">'.$membership->type.'</option>';
+                                                                    echo '<option value="'.$membership->type.'">'.$membership->type.'</option>';
                                                                 }
                                                             ?>
                                                         </select>
@@ -80,10 +79,6 @@
                                                     <div class="form-group label-floating">
                                                         <label class="control-label" for="birthdate">Birthdate</label>
                                                         <input type="date" name="birthdate" id="birthdate" required>
-                                                    </div>
-                                                    <div class="form-group label-floating">
-                                                        <label class="control-label" for="last_payment">Last payment</label>
-                                                        <input type="date" name="last_payment" id="last_payment" required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-primary pull-right">Add member</button>
