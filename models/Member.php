@@ -3,6 +3,7 @@
     require_once("../../interfaces/IMember.php");
     require_once("../../models/Helper.php");
     require_once("../../models/Branch.php");
+    use Carbon\Carbon;
 
     class Member implements IMember {
         /*              Attributes               */
@@ -39,7 +40,7 @@
     	public static function all(){
     		try{
                 $con = new Database;
-                $query = $con->prepare('SELECT * FROM members');
+                $query = $con->prepare('SELECT * FROM members ORDER BY id');
                 $query->execute();
                 $con->close();
                 
@@ -102,12 +103,13 @@
             
     		try{
     			$query = $this->con->prepare('INSERT INTO members (membership, name, last_name, birthdate, created_at, last_payment, branch_id, recommended_by) values (?,?,?,?,?,?,?,?)');
-                $query->bindParam(1, $this->membership, PDO::PARAM_INT);
+                $query->bindParam(1, $this->membership, PDO::PARAM_STR);
                 $query->bindParam(2, $this->name, PDO::PARAM_STR);
                 $query->bindParam(3, $this->last_name, PDO::PARAM_STR);
                 $query->bindParam(4, $this->birthdate, PDO::PARAM_STR);
-                $query->bindParam(5, $this->created_at, PDO::PARAM_STR);
-                $query->bindParam(6, $this->last_payment, PDO::PARAM_STR);
+                $created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+                $query->bindParam(5, $created_at, PDO::PARAM_STR);
+                $query->bindParam(6, $created_at, PDO::PARAM_STR);
                 $query->bindParam(7, $this->branch_id, PDO::PARAM_INT);
                 $query->bindParam(8, $this->recommended_by, PDO::PARAM_INT);
                 $data->result = $query->execute();
@@ -132,7 +134,7 @@
             ];
             
     		try{
-    			$query = $this->con->prepare('UPDATE classes SET membership = ?, name = ?, last_name = ?, birthdate = ?, last_payment = ?, branch_id = ?, recommended_by = ? WHERE id = ?');
+    			$query = $this->con->prepare('UPDATE members SET membership = ?, name = ?, last_name = ?, birthdate = ?, last_payment = ?, branch_id = ?, recommended_by = ? WHERE id = ?');
                 $query->bindParam(1, $this->membership, PDO::PARAM_INT);
                 $query->bindParam(2, $this->name, PDO::PARAM_STR);
                 $query->bindParam(3, $this->last_name, PDO::PARAM_STR);

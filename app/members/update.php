@@ -13,15 +13,23 @@
         'name' => FILTER_SANITIZE_STRING,
         'last_name' => FILTER_SANITIZE_STRING,
         'birthdate' => FILTER_SANITIZE_STRING,
+        'last_payment' => FILTER_SANITIZE_STRING,
         'branch_id'  => FILTER_VALIDATE_INT,
         'recommended_by'  => FILTER_VALIDATE_INT,
+        'id' => FILTER_VALIDATE_INT
     );
     
 
-	$post = (object)filter_input_array(INPUT_POST, $args);
+    $post = (object)filter_input_array(INPUT_POST, $args);
 
     if(!$post->branch_id){ // check that they are integers
 		$_SESSION["error"] = "ERROR: ".$post->branch_id."Invalid input, branch id must be an integer.";
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+		exit;
+    }
+
+    if(!is_int($post->id) || $post->id <= 0){ // check that they are integers
+		$_SESSION["error"] = "ERROR: ".$post->id." Invalid input, id must be a positive integer.";
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
 		exit;
     }
@@ -43,12 +51,20 @@
     }
 
     try{
-		$start = new Carbon($post->birthdate, 'America/Mexico_City');
-        $member = new Member();
+        $start = new Carbon($post->birthdate, 'America/Mexico_City');
+        $payment = new Carbon($post->last_payment, 'America/Mexico_City');
+        $member = Member::get($post->id);
+
+        if(!$member){
+            $_SESSION["error"] = "ERROR: ".$post->recommended_by." Invalid member.";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    
         
-		$member->setAttributes(NULL, $post->branch_id, $post->membership, $post->name, $post->last_name, $start->toDateTimeString(), $post->recommended_by, NULL, NULL);
-        
-        $result = $member->save();
+		$member->setAttributes($member->id, $post->branch_id, $post->membership, $post->name, $post->last_name, $start->toDateTimeString(), $post->recommended_by, NULL, $payment->toDateTimeString());
+
+        $result = $member->update();
 
 		if($result->result)
 			$_SESSION["success"] = "Member correctly saved.";

@@ -48,8 +48,7 @@
                                     </div>
                                     <div class="card-content">
                                         <form action="<?php echo Helper::baseurl() ?>app/members/update.php" method="POST">
-                                            <input type="hidden" name="created_at" id="created_at" value="<?php echo $member->created_at ?>">
-                                            <input type="hidden" name="id" value="<?php echo $member->id ?>" />
+                                            <input type="hidden" value="<?php echo $member->id ?>" id="id" name="id">
                                             <div class="row">
                                                 <div class="col-md-8 col-md-offset-2">
                                                     <div class="form-group label-floating">
@@ -76,10 +75,10 @@
                                                             <?php
                                                                 foreach($memberships as $membership){
                                                                     if($membership->type == $member->membership){
-                                                                        echo '<option value="'.$membership->id.'" selected>'.$membership->type.'</option>';
+                                                                        echo '<option value="'.$membership->type.'" selected>'.$membership->type.'</option>';
                                                                     }
                                                                     else{
-                                                                        echo '<option value="'.$membership->id.'">'.$membership->type.'</option>';
+                                                                        echo '<option value="'.$membership->type.'">'.$membership->type.'</option>';
                                                                     }
                                                                     
                                                                 }
@@ -93,10 +92,10 @@
                                                             <?php
                                                                 foreach($members as $member1){
                                                                     if($member->recommended_by != null && $member1->id == $member->recommended_by){
-                                                                        echo '<option value="'.$member->id.'" selected>'.$member->name." ".$member->last_name.'</option>';
+                                                                        echo '<option value="'.$member1->id.'" selected>'.$member1->name." ".$member1->last_name.'</option>';
                                                                     }
                                                                     else{
-                                                                        echo '<option value="'.$member->id.'">'.$member->name." ".$member->last_name.'</option>';
+                                                                        echo '<option value="'.$member1->id.'">'.$member1->name." ".$member1->last_name.'</option>';
                                                                     }
                                                                     
                                                                 }
@@ -112,7 +111,7 @@
                                                         <input type="date" value="<?php echo $member->last_payment ?>"name="last_payment" id="last_payment" required>
                                                     </div>
 
-                                                    <button type="submit" class="btn btn-primary pull-right">Add member</button>
+                                                    <button type="submit" class="btn btn-primary pull-right">Update values</button>
                                                     <a class="btn btn-danger pull-right" href="<?php echo Helper::baseurl() ?>app/members/index.php">Cancel</a>
                                                     <div class="clearfix"></div>
                                                 </div>
