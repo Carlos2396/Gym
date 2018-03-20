@@ -3,6 +3,7 @@
     require_once("../../interfaces/ISchedule.php");
     require_once("../../models/Helper.php");
     require_once("../../models/Lesson.php");
+    require_once("../../models/Member.php");
     require '../../vendor/autoload.php';
     use Carbon\Carbon;
 
@@ -177,6 +178,32 @@
         /*              Relations               */
         public function lesson(){
             return Lesson::get($this->lesson_id);
+        }
+
+        public function members(){
+            try{
+                $con = new Database;
+                $query = $con->prepare('SELECT * FROM member_schedule ms, member m WHERE ms.schedule_id = ? AND m.id = ms.member_id ORDER BY id;');
+                $query->bindParam(1, $this->id, PDO::PARAM_INT);
+                $query->execute();
+                $con->close();
+
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+                $members = array();
+                if(!empty($results)){
+                    foreach($results as $result){
+                        $temp = new Member;
+                        $temp->setAttributes($result->id, $result->branch_id, $result->membership, $result->name, $result->last_name, $result->birthdate, $result->recommended_by, $result->created_at, $result->last_payment);
+                        array_push($members, $temp);
+                    }
+                }
+
+                return $members;
+    		}
+            catch(PDOException $e){
+    	        echo  $e->getMessage();
+    	    }
         }
     }
 ?>

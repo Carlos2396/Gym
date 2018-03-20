@@ -25,7 +25,7 @@
     	public static function all(){
     		try{
                 $con = new Database;
-                $query = $con->prepare('SELECT * FROM branches');
+                $query = $con->prepare('SELECT * FROM branches ORDER BY id');
                 $query->execute();
                 $con->close();
                 

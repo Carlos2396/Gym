@@ -25,13 +25,20 @@
 		exit;
 	}
 
-	if($post->duration > 30 || $post->duration < 5){ // check that duraation is higher or equal to 30 and lower or equal to 120
+	if($post->capacity > 30 || $post->capacity < 5){ // check that duraation is higher or equal to 30 and lower or equal to 120
 		$_SESSION["error"] = "Invalid input, the capacity must be an integer between 5 and 30.";
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
 		exit;
 	}
 
-	$lesson = new Lesson;
+	$lesson = Lesson::get($post->id);
+	
+	if($lesson == null){
+		$_SESSION["error"] = "Lesson not found.";
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+		exit;
+	}
+	
 	$lesson->setAttributes($post->id, $post->name, $post->capacity, $post->trainer_id);
     $result = $lesson->update();
 	

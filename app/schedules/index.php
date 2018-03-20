@@ -26,7 +26,7 @@
                                 <td><?php echo $i+1 ?></td>
                                 <td><?php echo $schedule->start_time->format('l h:i:s A') ?></td>
                                 <td><?php echo $schedule->end_time->format('l h:i:s A') ?></td>
-                                <td>10</td>
+                                <td><?php echo sizeof($schedule->members()) ?></td>
                                 <td>
                                     <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/schedules/delete.php?schedule=<?php echo $schedule->id ?>">Delete</a>
                                 </td>

@@ -32,7 +32,7 @@
     	public static function all(){
     		try{
                 $con = new Database;
-                $query = $con->prepare('SELECT * FROM trainers');
+                $query = $con->prepare('SELECT * FROM trainers ORDER BY name');
                 $query->execute();
                 $con->close();
                 

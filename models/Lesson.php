@@ -34,7 +34,7 @@
     	public static function all(){
     		try{
                 $con  = new Database;
-                $query = $con->prepare('SELECT * FROM classes');
+                $query = $con->prepare('SELECT * FROM classes ORDER BY id');
                 $query->execute();
                 $results =  $query->fetchAll(PDO::FETCH_OBJ);
                 $con->close();
