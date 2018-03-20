@@ -34,7 +34,6 @@ CREATE TYPE membership_type AS ENUM ('standard', 'premium');
 
 CREATE TABLE members(
     id serial PRIMARY KEY,
-    
     membership membership_type NOT NULL,
     name text NOT NULL,
     last_name text NOT NULL,
