@@ -183,7 +183,7 @@
         public function members(){
             try{
                 $con = new Database;
-                $query = $con->prepare('SELECT * FROM member_schedule ms, member m WHERE ms.schedule_id = ? AND m.id = ms.member_id ORDER BY id;');
+                $query = $con->prepare('SELECT * FROM member_schedule ms, members m WHERE ms.schedule_id = ? AND m.id = ms.member_id ORDER BY id;');
                 $query->bindParam(1, $this->id, PDO::PARAM_INT);
                 $query->execute();
                 $con->close();
