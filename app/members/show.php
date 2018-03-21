@@ -13,6 +13,7 @@
             ini_set('display_errors', 1);
             require_once "../../models/Helper.php";
             require_once "../../models/Member.php";
+            require_once "../../models/Trainer.php";
             require_once "../../models/Schedule.php";
             use Carbon\Carbon;
             
@@ -81,7 +82,7 @@
                                     </div>
                                     <div class="card-content">
                                         <form action="<?php echo Helper::baseurl() ?>app/class_member/save.php" method="POST">
-                                            <input type="hidden" value="<?php echo $id ?>" id="member" name="member">
+                                            <input type="hidden" value="<?php echo $member->id ?>" id="member" name="member">
                                             <div class="row">
                                                 <div class="col-md-8 col-md-offset-2">
                                                     <div class="form-group label-floating">
@@ -89,7 +90,7 @@
                                                         <select class="form-control" name="schedule" id="schedule" required>
                                                             <?php
                                                                 foreach($schedules as $schedule){
-                                                                    echo '<option value="'.$schedule->id.'">'.$schedule->lesson()->name." | ".$schedule->start_time->format('l h:i:s A')."-".$schedule->end_time->format('l h:i:s A').'</option>';
+                                                                    echo '<option value="'.$schedule->id.'">'.$schedule->lesson()->name."  |  ".$schedule->lesson()->trainer()->name."  |  ".$schedule->lesson()->trainer()->branch()->name."  |  ".$schedule->start_time->format('l h:i:s A')."-".$schedule->end_time->format('l h:i:s A').'</option>';
                                                                 }
                                                             ?>
                                                         </select>
@@ -106,38 +107,34 @@
                                         <p class="category">Classes of current member </p>
                                     </div>
                                     <div class="card-content table-responsive">
-                                        <?php if(!empty($member->schedules())) { ?>
-                                        
+                                        <?php if(!empty($member->schedules())) { ?>  
                                             <table class="table">
                                                 <thead class="text-primary">
                                                     <th>Id</th>
                                                     <th>Name</th>
-                                                    <th>Capacity</th>
                                                     <th>Trainer</th>
                                                     <th>Branch</th>
-                                                    <th>Starts</th>
-                                                    <th>Ends</th>
-                                                    <th>Actions</th>
+                                                    <th>Start</th>
+                                                    <th>End</th>
                                                 </thead>
                                                 <tbody>
                                                     <?php foreach( $member->schedules() as $schedule ) { ?>
                                                         <tr>
-                                                            <td><?php echo $schedule->lesson()->id ?></td>
+                                                            <td><?php echo $schedule->id ?></td>
                                                             <td><?php echo $schedule->lesson()->name ?></td>
-                                                            <td><?php echo $schedule->lesson()->capacity ?></td>
-                                                            <td><?php echo Lesson::get($schedule->id)->trainer()->name ?> <?php echo Lesson::get($schedule->id)->trainer()->last_name ?></td>
-                                                            <td><?php echo Lesson::get($schedule->id)->trainer()->branch()->name ?></td>
-                                                            <td><?php echo $schedule->start_time ?></td>
-                                                            <td><?php echo $schedule->end_time ?></td>
+                                                            <td><?php echo $schedule->lesson()->trainer()->name ?></td>
+                                                            <td><?php echo $schedule->lesson()->trainer()->branch()->name ?></td>
+                                                            <td><?php echo $schedule->start_time->format('l h:i:s A') ?></td>
+                                                            <td><?php echo $schedule->end_time->format('l h:i:s A') ?></td>
                                                             <td>
-                                                                <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/class_member/delete.php?schedule=<?php echo $schedule->id ?>&member=<?php echo $member->id ?>">Delete</a>
+                                                            <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/class_member/delete.php?schedule=<?php echo $schedule->id ?>&member=<?php echo $member->id ?>">Delete</a>
                                                             </td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
                                         <?php } else { ?>
-                                            <div class="alert alert-danger" style="margin-top: 100px">There are no classes registered.</div>
+                                            <div class="alert alert-danger" style="margin-top: 10px">There are no classes registered.</div>
                                         <?php } ?>
                                     </div>
                                 </div>

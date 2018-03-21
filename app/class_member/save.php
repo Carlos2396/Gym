@@ -19,7 +19,10 @@
     }
 	
 	
-	$result = $member->enroll($schedule_id);
+    $result = $member->enroll($schedule_id);
+    
+    echo json_encode($result);
+    die();
 	
 	if(!$result->result->enroll){
 		$_SESSION["error"] = "User's schedule incorrectly enrolled.";

@@ -60,7 +60,7 @@
                                                             <td><?php echo Lesson::get($lesson->id)->trainer()->name ?> <?php echo Lesson::get($lesson->id)->trainer()->last_name ?></td>
                                                             <td><?php echo Lesson::get($lesson->id)->trainer()->branch()->name ?></td>
                                                             <td>
-                                                                <a class="btn btn-info" href="<?php echo Helper::baseurl() ?>app/classes/show.php?lesson=<?php echo $lesson->id ?>">Show</a>
+                                                                <a class="btn btn-info" href="<?php echo Helper::baseurl() ?>app/classes/show.php?lesson=<?php echo $lesson->id ?>">Manage schedules</a>
                                                                 <a class="btn btn-primary" href="<?php echo Helper::baseurl() ?>app/classes/edit.php?lesson=<?php echo $lesson->id ?>">Edit</a> 
                                                                 <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/classes/delete.php?lesson=<?php echo $lesson->id ?>">Delete</a>
                                                             </td>

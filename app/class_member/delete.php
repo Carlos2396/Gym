@@ -14,13 +14,14 @@
     $member = Member::get($member_id);
     if(!$schedule || !$member){
         $_SESSION["error"] = "Wrong member or schedule";
-        header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id."");
+        header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id);
         exit;
     }
     
     $member->unsubscribe($schedule_id);
+    
     $_SESSION["success"] = "User's schedule correctly deleted.";
     
     
-	header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id."");
+	header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id);
 ?>

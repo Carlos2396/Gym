@@ -226,8 +226,7 @@
                     $data->error = $query->errorInfo();
                     $data->error = $data->error[2];   
                 }
-                $data->result = $query->fetchAll(PDO::FETCH_OBJ);
-
+                $data->result = $query->fetch(PDO::FETCH_OBJ);
             }
             catch(PDOException $e){
     	        $data->error = $e->getMessage();

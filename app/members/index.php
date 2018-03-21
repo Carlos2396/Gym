@@ -41,7 +41,6 @@
                                     </div>
                                     <div class="card-content table-responsive">
                                         <?php if(!empty($members)) { ?>
-                                        
                                             <table class="table">
                                                 <thead class="text-primary">
                                                     <th>Id</th>
@@ -58,21 +57,20 @@
                                                             <td><?php echo $member->id ?></td>
                                                             <td><?php echo $member->name ?></td>
                                                             <td><?php echo $member->last_name ?></td>
-                                                            <td><?php echo Member::get($member->id)->branch()->name ?></td>
+                                                            <td><?php echo $member->branch()->name ?></td>
                                                             <td><?php echo $member->membership ?></td>
                                                             <td><?php echo $member->birthdate ?></td>
                                                             <td>
-                                                                <a class="btn btn-info" href="<?php echo Helper::baseurl() ?>app/members/show.php?member=<?php echo $member->id ?>">Show</a>
+                                                                <a class="btn btn-info" href="<?php echo Helper::baseurl() ?>app/members/show.php?member=<?php echo $member->id ?>">Manage classes</a>
                                                                 <a class="btn btn-primary" href="<?php echo Helper::baseurl() ?>app/members/edit.php?member=<?php echo $member->id ?>">Edit</a> 
                                                                 <a class="btn btn-danger" href="<?php echo Helper::baseurl() ?>app/members/delete.php?member=<?php echo $member->id ?>">Delete</a>
                                                             </td>
-                                                            
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
                                         <?php } else { ?>
-                                            <div class="alert alert-danger" style="margin-top: 100px">There are no members registered.</div>
+                                            <div class="alert alert-danger" style="margin-top: 25px">There are no members registered.</div>
                                         <?php } ?>
                                     </div>
                                 </div>

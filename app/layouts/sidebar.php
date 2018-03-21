@@ -16,12 +16,6 @@
                     <p>Members</p>
                 </a>
             </li>
-            <li>
-                <a href="<?php echo Helper::baseurl() ?>app/class_member/index.php">
-                    <i class="material-icons">person</i>
-                    <p>Enroll members</p>
-                </a>
-            </li>
         </ul>
     </div>
 </div>
