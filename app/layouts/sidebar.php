@@ -19,7 +19,7 @@
             <li>
                 <a href="<?php echo Helper::baseurl() ?>app/class_member/index.php">
                     <i class="material-icons">person</i>
-                    <p>Enrolled members</p>
+                    <p>Enroll members</p>
                 </a>
             </li>
         </ul>

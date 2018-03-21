@@ -3,6 +3,7 @@
     require_once("../../interfaces/IMember.php");
     require_once("../../models/Helper.php");
     require_once("../../models/Branch.php");
+    require_once("../../models/Schedule.php");
     use Carbon\Carbon;
 
     class Member implements IMember {
@@ -174,6 +175,86 @@
                     $data->error = $query->errorInfo();
                     $data->error = $data->error[2];   
                 }
+            }
+            catch(PDOException $e){
+    	        $data->error = $e->getMessage();
+            }
+            
+            return $data;
+        }
+
+        public function schedules(){
+            try{
+                $con = new Database;
+                $query = $con->prepare('SELECT * FROM member_schedule ms, schedules s WHERE ms.member_id = ? AND s.id = ms.schedule_id ORDER BY id;');
+                $query->bindParam(1, $this->id, PDO::PARAM_INT);
+                $query->execute();
+                $con->close();
+
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+                $schedules = array();
+                if(!empty($results)){
+                    foreach($results as $result){
+                        $temp = new Schedule;
+                        $temp->setAttributes($result->id, $result->start_time, $result->end_time, $result->class_id);
+                        array_push($schedules, $temp);
+                    }
+                }
+
+                return $schedules;
+    		}
+            catch(PDOException $e){
+    	        echo  $e->getMessage();
+    	    }
+        }
+
+        public function enroll($schedule_id){
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+
+            try{
+                $query = $this->con->prepare('SELECT enroll(?, ?)');
+                $query->bindParam(1, $this->id, PDO::PARAM_INT);
+                $query->bindParam(2, $schedule_id, PDO::PARAM_INT);
+                $data->result = $query->execute();
+                $this->con->close();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];   
+                }
+                $data->result = $query->fetchAll(PDO::FETCH_OBJ);
+
+            }
+            catch(PDOException $e){
+    	        $data->error = $e->getMessage();
+            }
+            
+            return $data;
+        }
+
+        public function unsubscribe($schedule_id){
+            $data = (object) [
+                'result' => false,
+                'error' => null
+            ];
+
+            try{
+                $query = $this->con->prepare('SELECT unsubscribe(?, ?)');
+                $query->bindParam(1, $this->id, PDO::PARAM_INT);
+                $query->bindParam(2, $schedule_id, PDO::PARAM_INT);
+                $data->result = $query->execute();
+                $this->con->close();
+
+                if(!$data->result){
+                    $data->error = $query->errorInfo();
+                    $data->error = $data->error[2];   
+                }
+
+                
             }
             catch(PDOException $e){
     	        $data->error = $e->getMessage();

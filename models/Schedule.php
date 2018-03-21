@@ -42,7 +42,7 @@
                 if(!empty($results)){
                     foreach($results as $result){
                         $temp = new Schedule;
-                        $temp->setAttributes($result->id, $result->start_time->toDateTimeString(), $result->end_time->toDateTimeString(), $result->class_id);
+                        $temp->setAttributes($result->id, $result->start_time, $result->end_time, $result->class_id);
                         array_push($schedules, $temp);
                     }
                 }

@@ -5,15 +5,22 @@
     
     require_once "../../models/Helper.php";
     require_once "../../models/Lesson.php";
+    require_once "../../models/Member.php";
 
-	$id = filter_input(INPUT_GET, 'lesson', FILTER_VALIDATE_INT);
-    
-	if($id){
-        Lesson::checkLesson($id);
-        $lesson = Lesson::get($id);
-        $lesson->delete();
-        $_SESSION["success"] = "Class correctly deleted.";
+    $schedule_id = filter_input(INPUT_GET, 'schedule', FILTER_VALIDATE_INT);
+    $member_id = filter_input(INPUT_GET, 'member', FILTER_VALIDATE_INT);
+
+    $schedule = Schedule::get($schedule_id);
+    $member = Member::get($member_id);
+    if(!$schedule || !$member){
+        $_SESSION["error"] = "Wrong member or schedule";
+        header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id."");
+        exit;
     }
     
-	header("Location:" . Helper::baseurl() . "app/classes/index.php");
+    $member->unsubscribe($schedule_id);
+    $_SESSION["success"] = "User's schedule correctly deleted.";
+    
+    
+	header("Location:" . Helper::baseurl() . "app/members/show.php?member=".$member_id."");
 ?>

@@ -62,3 +62,46 @@ $after_update_member_schedule$ LANGUAGE plpgsql;
 
 CREATE TRIGGER after_update_member_schedule AFTER UPDATE ON member_schedule
 FOR EACH ROW EXECUTE PROCEDURE checkAbsences();
+
+CREATE OR REPLACE FUNCTION enroll(member INTEGER, schedule INTEGER)
+    RETURNS boolean as $performed$
+    DECLARE
+        performed boolean;
+        isAllowed boolean;
+        class_capacity INTEGER;
+        members_in_schedule INTEGER;
+        class_id INTEGER;
+    BEGIN
+        performed := true;
+        LOCK TABLE member_schedule IN EXCLUSIVE MODE;
+        LOCK TABLE schedules IN EXCLUSIVE MODE;
+
+        SELECT allowed(member, schedule) INTO isAllowed;
+
+        IF(isAllowed = false) THEN
+            performed := false;
+        END IF;
+
+        SELECT COUNT(*) FROM member_schedule ms
+        WHERE ms.schedule_id = schedule
+        INTO members_in_schedule;
+
+        SELECT s.class_id FROM schedules s
+        WHERE s.id = schedule INTO class_id;
+
+        SELECT c.capacity FROM classes c
+        WHERE c.id = class_id
+        INTO class_capacity;
+
+        IF(members_in_schedule = class_capacity) THEN
+            performed := false;
+        END IF;
+
+        if(performed = true) THEN
+            INSERT INTO member_schedule (member_id, schedule_id)
+            VALUES (member, schedule);
+        END IF;
+
+        RETURN isAllowed;
+    END;
+$performed$ LANGUAGE plpgsql;
